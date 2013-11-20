@@ -1,0 +1,4 @@
+https://developer.apple.com/library/ios/documentation/AppleApplications/Reference/SafariWebContent/Introduction/Introduction.html#//apple_ref/doc/uid/TP40002051-CH1-SW1
+http://developer.android.com/guide/webapps/index.html
+http://msdn.microsoft.com/en-us/library/windowsphone/develop/ff462082(v=vs.105).aspx
+http://phonegap.com/about/feature/
