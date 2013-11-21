@@ -5,9 +5,6 @@
 		video {
 			height: 540px;
 		}
-		body {
-			margin: auto;
-		}
 	</style>
 	<script>
 		navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
@@ -35,6 +32,6 @@
 </head>
 <body>
 	<video autoplay></video>
-	<button onclick="shoot">I'm ready for my close-up.</button>
+	<button onclick="shoot()">I'm ready for my close-up.</button>
 </body>
 </html>
