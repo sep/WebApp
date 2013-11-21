@@ -9,6 +9,7 @@ Camera
 
 	var errorCallback = function(e) {
 		console.log('Reeeejected!', e);
+		document.querySelector('#error').innerHTML += e;
 	};
 
 	function success (stream) {
@@ -26,3 +27,4 @@ Camera
 	navigator.getUserMedia({video: true, audio: false}, success, errorCallback);
 </script>
 <video autoplay></video>
+<p id="error"></p>
