@@ -1,1 +1,27 @@
 Camera
+<style>
+	video {
+		height: 540px;
+	}
+</style>
+<script>
+	navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+
+	var errorCallback = function(e) {
+		console.log('Reeeejected!', e);
+	};
+
+	function success (stream) {
+		window.stream = stream;
+		if (window.URL) {
+			video.src = window.URL.createObjectURL(stream);
+		} else {
+			video.src = stream;
+		};
+
+		video.play();
+	}
+
+	navigator.getUserMedia({video: true, audio: false}, success, errorCallback);
+</script>
+<video autoplay></video>
