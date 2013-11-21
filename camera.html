@@ -7,6 +7,8 @@ Camera
 <script>
 	navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
+	var video = document.querySelector('video');
+
 	var errorCallback = function(e) {
 		console.log('Reeeejected!', e);
 	};
