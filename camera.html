@@ -1,43 +1,99 @@
 <html>
-<head>
-	<title>Camera Experiments</title>
-	<style>
-		video {
-			height: 540px;
-		}
-	</style>
-	<script>
-		navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+	<head>
+		<title>Camera Experiments</title>
+		<style>
+			video {
+				height: 320px;
+			}
+		</style>
+		<script>
+			String.prototype.capitalize = function () {
+				return this.charAt(0).toUpperCase() + this.slice(1);
+			}
 
-		function errorCallback (e) {
-			console.log('Rejected!', e);
-		}
+			navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
-		function success (stream) {
-			var video = document.querySelector('video');
-			window.stream = stream;
-			if (window.URL) {
-				video.src = window.URL.createObjectURL(stream);
-			} else {
-				video.src = stream;
-			};
+			function errorCallback (e) {
+				console.log('Rejected!', e);
+			}
 
-			video.play();
-		}
+			function success (stream) {
+				var video = document.querySelector('video');
+				window.stream = stream;
+				if (window.URL) {
+					video.src = window.URL.createObjectURL(stream);
+				} else {
+					video.src = stream;
+				};
 
-		function shoot (event) {
-			navigator.getUserMedia({video: true, audio: false}, success, errorCallback);
-		}
+				video.play();
+			}
 
-		function cut (event) {
-			var video = document.querySelector('video');
-			video.pause();
-		}
-	</script>
-</head>
-<body>
-	<video autoplay></video>
-	<button onclick="shoot()">I'm ready for my close-up.</button>
-	<button onclick="cut()">Cut!</button>
-</body>
+			function load (argument) {
+				navigator.getUserMedia({video: true, audio: false}, success, errorCallback);
+			}
+
+			function shoot (event) {
+				var video = document.querySelector('video');
+				video.play();
+			}
+
+			function cut (event) {
+				var video = document.querySelector('video');
+				video.pause();
+			}
+
+			var filters = {
+				'blur': {name: 'blur', value: 0, valueType: "px"},
+				'brightness': {name: 'brightness', value: 0, valueType: "%"},
+				'contrast': {name: 'contrast', value: 0, valueType: "%"},
+				'grayscale': {name: 'grayscale', value: 0, valueType: "%"},
+				'hue-rotate': {name: 'hue-rotate', value: 0, valueType: "deg"},
+				'invert': {name: 'invert', value: 0, valueType: "%"},
+				'opacity': {name: 'opacity', value: 1, valueType: "%"},
+				'saturate': {name: 'saturate', value: 0, valueType: "%"},
+				'sepia': {name: 'sepia', value: 0, valueType: "%"},
+			}
+
+			function changeFilter (select) {
+				console.log("New filter: " + select.value);
+				var newFilter = filters[select.value];
+
+				document.querySelector('#filterTitle').innerHTML = newFilter.name.capitalize();
+
+				updateFilter(newFilter.value);
+			}
+
+			function updateFilter (newValue) {
+				var filter = filters[document.querySelector('#filterSelect').value];
+				filter.value = newValue;
+				document.querySelector('video').style.webkitFilter = filter.name + "(" + filter.value + filter.valueType + ")";
+			}		
+		</script>
+	</head>
+	<body>
+		<div>
+			<video autoplay></video>
+		</div>
+		<div>
+			<button onclick="load()">I'm ready for my close-up.</button>
+			<button onclick="shoot()">Action</button>
+			<button onclick="cut()">Cut!</button>
+			<select id="filterSelect" onchange="changeFilter(this)">
+				<option value="blur">Blur</option>
+				<option value="brightness">Brightness</option>
+				<option value="contrast">Contrast</option>
+				<option value="grayscale">Grayscale</option>
+				<option value="hue-rotate">Hue-rotate</option>
+				<option value="invert">Invert</option>
+				<option value="opacity">Opacity</option>
+				<option value="saturate">Saturate</option>
+				<option value="sepia">Sepia</option>
+			</select>
+		</div>
+		<div id="filter">
+			<label id="filterTitle">Blur</label>
+			<input id="filterValue" type="range" min="0" max="100" value="50" onchange="updateFilter(this.value)" />
+		</div>
+	</body>
 </html>
