@@ -4,15 +4,13 @@
 	<style>
 		video {
 			height: 540px;
+		}
+		body {
 			margin: auto;
 		}
 	</style>
 	<script>
 		navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-
-		if (!!navigator.getUserMedia) {
-			alert("getUserMedia is not supoprted here.");
-		}
 
 		function errorCallback (e) {
 			console.log('Rejected!', e);
@@ -33,12 +31,10 @@
 		function shoot (event) {
 			navigator.getUserMedia({video: true, audio: false}, success, errorCallback);
 		}
-
-		document.querySelector('button').addEventListener('click', shoot);
 	</script>
 </head>
 <body>
 	<video autoplay></video>
-	<button>I'm ready for my close-up.</button>
+	<button onclick="shoot">I'm ready for my close-up.</button>
 </body>
 </html>
