@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Camera Experiments (iOS)</title>
+	</head>
+	<body>
+		<div id="viewer">
+		</div>
+		<input type="file" accept="image/*" capture="camera" onchange="handleImage(this)" />
+		<input type="file" accept="video/*" capture="camcorder" onchage="handleVideo(this.file)" />
+
+		<script type="text/javascript">
+			function handleImage (file) {
+				var image = document.createElement("img");
+				image.file = file;
+				document.querySelector("#viewer").innerHTML = "<img file=" + file + "/>"
+			}
+		</script>
+	</body>
+</html>
