@@ -37,6 +37,23 @@ function handleImageSelect(evt) {
 }
 
 function handleVideoSelect (evt) {
-	
+	var file = evt.target.files[0];
+	var reader = new FileReader();
+	reader.onload = (function(theFile) {
+		return function(e) {
+			// Render thumbnail.
+			var vid = document.createElement('video');
+			document.getElementById('viewer').insertBefore(vid, null);
+			vid.onerror = function (error) {
+				console.log(error);
+				alert('There was an error adding the video.\n';
+			}
+			vid.src = e.target.result;
+		};
+	})(file);
+
+	reader.readAsDataURL(file);
 }
+
 document.getElementById('camera').addEventListener('change', handleImageSelect, false);
+document.getElementById('camcorder').addEventListener('change', handleVideoSelect, false);
