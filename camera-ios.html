@@ -2,6 +2,11 @@
 <html>
 	<head>
 		<title>Camera Experiments (iOS)</title>
+		<style type="text/css">
+		#viewer img {
+			width: 640px;
+		}
+		</style>
 	</head>
 	<body>
 		<div id="viewer">
@@ -10,10 +15,23 @@
 		<input type="file" accept="video/*" capture="camcorder" onchage="handleVideo(this.file)" />
 
 		<script type="text/javascript">
+		if (!!(window.File && window.FileReader && window.FileList && window.blob) {
+			alert('File APIs are not fully supported.');
+		};
+
 			function handleImage (file) {
-				var image = document.createElement("img");
-				image.file = file;
-				document.querySelector("#viewer").appendChild(image);
+				console.log(file);
+				var reader = new FileReader();
+				reader.onload = (function (aFile) {
+					return function (e) {
+						var img = document.createElement('img');
+						img.src = e.target.result;
+						console.log(img.src);
+						document.querySelector('#viewer').appendChild(img);
+					}
+				})(file);
+
+				reader.readAsDataURL(file);
 			}
 		</script>
 	</body>
