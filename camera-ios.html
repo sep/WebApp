@@ -4,65 +4,18 @@
 		<title>Camera Experiments (iOS)</title>
 		<style type="text/css">
 		#viewer img {
-			width: 640px;
+			width: 320px;
 		}
 		</style>
+		<meta name="viewport" content="width=device-width">
 	</head>
 	<body>
 		<div id="viewer">
 		</div>
-		<input id="camera" type="file" accept="image/*" capture="camera"/>
-		<input type="file" accept="video/*" capture="camcorder" onchage="handleVideo(this.file)" />
-
-		<script type="text/javascript">
-			if (!!(window.File && window.FileReader && window.FileList && window.blob)) {
-				alert('File APIs are not fully supported.');
-			};
-
-			function handleImage (file) {
-				console.log(file);
-				var reader = new FileReader();
-				reader.onload = (function (aFile) {
-					return function (e) {
-						var img = document.createElement('img');
-						img.src = e.target.result;
-						console.log(img.src);
-						document.querySelector('#viewer').appendChild(img);
-					}
-				})(file);
-
-				reader.readAsDataURL(file);
-			}
-
-			function handleFileSelect(evt) {
-				var files = evt.target.files; // FileList object
-
-				// Loop through the FileList and render image files as thumbnails.
-				for (var i = 0, f; f = files[i]; i++) {
-
-					// Only process image files.
-					if (!f.type.match('image.*')) {
-						continue;
-					}
-
-					var reader = new FileReader();
-
-					// Closure to capture the file information.
-					reader.onload = (function(theFile) {
-						return function(e) {
-							// Render thumbnail.
-							var span = document.createElement('span');
-							span.innerHTML = ['<img src="', e.target.result, '"/>'].join('');
-							document.getElementById('viewer').insertBefore(span, null);
-						};
-					})(f);
-
-					// Read in the image file as a data URL.
-					reader.readAsDataURL(f);
-				}
-			}
-
-			document.getElementById('camera').addEventListener('change', handleFileSelect, false);
-		</script>
+		<div id="controls">
+			<input id="camera" type="file" accept="image/*" capture="camera">
+			<input id="camcorder" type="file" accept="video/*" capture="camcorder">
+		</div>
+		<script src="camera-ios.js"></script>
 	</body>
 </html>
