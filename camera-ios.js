@@ -43,10 +43,9 @@ function handleVideoSelect (evt) {
 		return function(e) {
 			// Render thumbnail.
 			var vid = document.createElement('video');
-			document.getElementById('viewer').insertBefore(vid, null);
+			document.getElementById('viewer').appendChild(vid, null);
 			vid.onerror = function (error) {
 				console.log(error);
-				alert('There was an error adding the video.');
 			};
 			vid.src = e.target.result;
 		};
