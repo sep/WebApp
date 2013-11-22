@@ -46,8 +46,8 @@ function handleVideoSelect (evt) {
 			document.getElementById('viewer').insertBefore(vid, null);
 			vid.onerror = function (error) {
 				console.log(error);
-				alert('There was an error adding the video.\n';
-			}
+				alert('There was an error adding the video.');
+			};
 			vid.src = e.target.result;
 		};
 	})(file);
