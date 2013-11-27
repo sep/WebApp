@@ -41,7 +41,7 @@ function handleVideoSelect (evt) {
 	var reader = new FileReader();
 	reader.onload = (function(theFile) {
 		return function(e) {
-			// Render thumbnail.
+			console.log(e);
 			var vid = document.createElement('video');
 			document.getElementById('viewer').appendChild(vid, null);
 			vid.onerror = function (error) {
