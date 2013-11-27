@@ -23,7 +23,7 @@ function handleImageSelect(evt) {
 	reader.onload = function(e) {
 		var img = document.createElement('img');
 		img.src = e.target.result;
-		document.getElementById('viewer').insertBefore(img, null);
+		document.getElementById('viewer').insertBefore(img);
 	};
 
 	reader.readAsDataURL(file);
@@ -32,16 +32,21 @@ function handleImageSelect(evt) {
 function handleVideoSelect (evt) {
 	var file = evt.target.files[0];
 	var reader = new FileReader();
-	reader.onloadend = function(e) {
-		console.log(e);
-		var vid = document.createElement('video');
-		document.getElementById('viewer').appendChild(vid, null);
-		vid.onerror = function (error) {
-			console.log(error);
+	reader.onloadend = function (aFile) {
+			return function(e) {
+			console.log(e);
+			var vid = document.createElement('video');
+			var vidSrc = document.createElement('source');
+			vid.appendChild(vidSrc);
+			document.getElementById('viewer').appendChild(vid);
+			vid.onerror = function (error) {
+				console.log(error);
+			};
+			vidSrc.type = aFile.type;
+			vidSrc.src = e.target.result;
 		};
-		vid.src = e.target.result;
-	};
-
+	}(file);
+	
 	reader.readAsDataURL(file);
 }
 
