@@ -19,38 +19,34 @@ function handleImage (file) {
 
 function handleImageSelect(evt) {
 	var file = evt.target.files[0];
-
 	var reader = new FileReader();
+	reader.onload = function(e) {
+		var img = document.createElement('img');
+		img.src = e.target.result;
+		document.getElementById('viewer').insertBefore(img);
+	};
 
-	// Closure to capture the file information.
-	reader.onload = (function(theFile) {
-		return function(e) {
-			// Render thumbnail.
-			var img = document.createElement('img');
-			img.src = e.target.result;
-			document.getElementById('viewer').insertBefore(img, null);
-		};
-	})(file);
-
-	// Read in the image file as a data URL.
 	reader.readAsDataURL(file);
 }
 
 function handleVideoSelect (evt) {
 	var file = evt.target.files[0];
 	var reader = new FileReader();
-	reader.onload = (function(theFile) {
-		return function(e) {
-			// Render thumbnail.
+	reader.onloadend = function (aFile) {
+			return function(e) {
+			console.log(e);
 			var vid = document.createElement('video');
-			document.getElementById('viewer').appendChild(vid, null);
+			var vidSrc = document.createElement('source');
+			vid.appendChild(vidSrc);
+			document.getElementById('viewer').appendChild(vid);
 			vid.onerror = function (error) {
 				console.log(error);
 			};
-			vid.src = e.target.result;
+			vidSrc.type = aFile.type;
+			vidSrc.src = e.target.result;
 		};
-	})(file);
-
+	}(file);
+	
 	reader.readAsDataURL(file);
 }
 
